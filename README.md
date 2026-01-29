@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-💻 Full Stack Developer | AI-ML Learner  
+💻 Full Stack Developer | 🤖 AI-ML Learner  
 <br>
 🚀 Turning ideas into scalable and interactive products
 </p>
@@ -28,21 +28,33 @@
 
 <h2>🧠 Languages</h2>
 <p>
-  <img src="https://skillicons.dev/icons?i=java,php,js,html,css,c,cpp" />
+  <img src="https://skillicons.dev/icons?i=c,python,java,cs,html,css,js,dotnet" />
+</p>
+
+<p>
+<b>MVC Razor View:</b> cshtml
 </p>
 
 ---
 
 <h2>⚙ Frameworks & Databases</h2>
 <p>
-  <img src="https://skillicons.dev/icons?i=spring,react,vite,mysql,mongodb" />
+  <img src="https://skillicons.dev/icons?i=express,react,mongodb,mysql,dotnet,androidstudio" />
+</p>
+
+<p>
+<b>Database:</b> Microsoft SQL Server
 </p>
 
 ---
 
-<h2>🧰 Build Tools & Others</h2>
+<h2>🧰 Tools & Others</h2>
 <p>
-  <img src="https://skillicons.dev/icons?i=git,github,vscode,unity,postman" />
+  <img src="https://skillicons.dev/icons?i=git,github,vscode,unity" />
+</p>
+
+<p>
+<b>IDE:</b> Visual Studio Community
 </p>
 
 ---
@@ -50,15 +62,15 @@
 <h2>📊 GitHub Analytics</h2>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=YOUR_USERNAME&show_icons=true&theme=tokyonight" />
+  <img src="https://github-readme-stats.vercel.app/api?username=HetKanasagara&show_icons=true&count_private=true&theme=tokyonight&cache_seconds=1800" />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=YOUR_USERNAME&theme=tokyonight" />
+  <img src="https://github-readme-streak-stats.herokuapp.com?user=HetKanasagara&theme=tokyonight&hide_border=false" />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_USERNAME&layout=compact&theme=tokyonight" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=HetKanasagara&layout=compact&theme=tokyonight&langs_count=8" />
 </p>
 
 ---
@@ -66,16 +78,16 @@
 <h2>🐍 Contribution Snake</h2>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_USERNAME/output/github-contribution-grid-snake.svg" />
+  <img src="https://raw.githubusercontent.com/HetKanasagara/HetKanasagara/output/github-contribution-grid-snake-dark.svg" />
 </p>
 
 ---
 
 <h2>🚀 Currently Working On</h2>
 
-- 🎮 Unity Multiplayer Game  
-- 📈 Stock Market Analytics Platform  
-- 🌐 MERN & Spring Boot Projects  
+- 💻 Frolic Event Project – MERN  
+- 🟦 MOM Project – MVC (.NET)  
+- 🤖 Learning AI-ML  
 
 ---
 
