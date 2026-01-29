@@ -1,9 +1,9 @@
 <h1 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?size=30&duration=4000&color=00F7FF&center=true&vCenter=true&width=750&lines=Hi+👋+I'm+Tirth+Makadia;Full+Stack+Developer;Unity+Game+Developer;Stock+Market+Enthusiast;Always+Learning+🚀">
+  <img src="https://readme-typing-svg.herokuapp.com?size=30&duration=4000&color=00F7FF&center=true&vCenter=true&width=750&lines=Hi+👋+I'm+Het+Kanasagara;Full+Stack+Developer;AI+ML+Learner;Always+Learning+🚀">
 </h1>
 
 <p align="center">
-💻 Full Stack Developer | 🎮 Unity Game Developer | 📈 Stock Market Enthusiast  
+💻 Full Stack Developer | AI-ML Learner  
 <br>
 🚀 Turning ideas into scalable and interactive products
 </p>
