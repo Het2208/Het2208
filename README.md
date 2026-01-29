@@ -1,6 +1,7 @@
 <h1 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?size=30&duration=4000&color=00F7FF&center=true&vCenter=true&width=750&lines=Hi+👋+I'm+Het+Kanasagara;Full+Stack+Developer;AI+ML+Learner;Always+Learning+🚀">
+  <img src="https://readme-typing-svg.herokuapp.com?size=30&duration=4000&color=000000&center=true&vCenter=true&width=750&lines=Hi+👋+I'm+Het+Kanasagara;Full+Stack+Developer;AI+ML+Learner;Always+Learning+🚀">
 </h1>
+
 
 <p align="center">
 💻 Full Stack Developer | 🤖 AI-ML Learner  
@@ -31,10 +32,6 @@
   <img src="https://skillicons.dev/icons?i=c,python,java,cs,html,css,js,dotnet" />
 </p>
 
-<p>
-<b>MVC Razor View:</b> cshtml
-</p>
-
 ---
 
 <h2>⚙ Frameworks & Databases</h2>
@@ -42,19 +39,11 @@
   <img src="https://skillicons.dev/icons?i=express,react,mongodb,mysql,dotnet,androidstudio" />
 </p>
 
-<p>
-<b>Database:</b> Microsoft SQL Server
-</p>
-
 ---
 
 <h2>🧰 Tools & Others</h2>
 <p>
   <img src="https://skillicons.dev/icons?i=git,github,vscode,unity" />
-</p>
-
-<p>
-<b>IDE:</b> Visual Studio Community
 </p>
 
 ---
@@ -75,10 +64,10 @@
 
 ---
 
-<h2>🐍 Contribution Snake</h2>
+<h2>Contribution 🐍</h2>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/HetKanasagara/HetKanasagara/output/github-contribution-grid-snake-dark.svg" />
+<img src="https://raw.githubusercontent.com/Het2208/Het2208/output/github-contribution-grid-snake.svg" />
 </p>
 
 ---
