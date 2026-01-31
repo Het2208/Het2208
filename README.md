@@ -50,6 +50,10 @@
 <h2 align="center">📊 GitHub Analytics</h2>
 
 <p align="center">
+  <img src="https://raw.githubusercontent.com/Het2208/Het2208/main/assets/github-metrics.svg" />
+</p>
+
+<p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=HetKanasagara&show_icons=true&count_private=true&theme=tokyonight&cache_seconds=1800" />
 </p>
 
