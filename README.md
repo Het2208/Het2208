@@ -46,39 +46,21 @@
 </p>
 
 ---
+<h2 align="center">📊 GitHub Analytics</h2>
 
-<h2 align="center">📈 Coding Activity Snapshot</h2>
-
+<!-- Overall Coding Impact -->
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=Het2208&show_icons=true&theme=tokyonight&hide_border=true" />
 </p>
 
+<!-- Contribution Streaks -->
 <p align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com?user=Het2208&theme=tokyonight&hide_border=true" />
 </p>
 
----
-
-<h2 align="center">🧩 Language Focus (by Usage)</h2>
-
+<!-- Language Distribution -->
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Het2208&layout=compact&theme=tokyonight&hide_border=true&langs_count=8" />
-</p>
-
-<p align="center">
-  <em>Languages I consistently build real projects with</em>
-</p>
-
----
-
-<h2 align="center">📊 Contribution Rhythm</h2>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Het2208/Het2208/main/assets/github-metrics.svg" />
-</p>
-
-<p align="center">
-  <em>Measured consistency > random bursts</em>
 </p>
 
 ---
