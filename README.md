@@ -1,7 +1,6 @@
 <h1 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?size=30&duration=4000&color=000000&center=true&vCenter=true&width=750&lines=Hi+👋+I'm+Het+Kanasagara;Full+Stack+Developer;AI+ML+Learner;Always+Learning+🚀">
+  <img src="https://readme-typing-svg.herokuapp.com?size=30&duration=4000&color=000000&center=true&vCenter=true&width=750&lines=Hi+👋+I'm+Het+Kanasagara;Full+Stack+Developer;AI-+ML+Learner;Always+Learning+🚀">
 </h1>
-
 
 <p align="center">
 💻 Full Stack Developer | 🤖 AI-ML Learner  
@@ -27,28 +26,28 @@
 
 ---
 
-<h2>🧠 Languages</h2>
-<p>
+<h2 align="center">🧠 Languages</h2>
+<p align="center">
   <img src="https://skillicons.dev/icons?i=c,python,java,cs,html,css,js,dotnet" />
 </p>
 
 ---
 
-<h2>⚙ Frameworks & Databases</h2>
-<p>
+<h2 align="center">⚙ Frameworks & Databases</h2>
+<p align="center">
   <img src="https://skillicons.dev/icons?i=express,react,mongodb,mysql,dotnet,androidstudio" />
 </p>
 
 ---
 
-<h2>🧰 Tools & Others</h2>
-<p>
+<h2 align="center">🧰 Tools & Others</h2>
+<p align="center">
   <img src="https://skillicons.dev/icons?i=git,github,vscode,unity" />
 </p>
 
 ---
 
-<h2>📊 GitHub Analytics</h2>
+<h2 align="center">📊 GitHub Analytics</h2>
 
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=HetKanasagara&show_icons=true&count_private=true&theme=tokyonight&cache_seconds=1800" />
@@ -62,29 +61,37 @@
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=HetKanasagara&layout=compact&theme=tokyonight&langs_count=8" />
 </p>
 
----
-
-<h2>Contribution 🐍</h2>
-
 <p align="center">
-<img src="https://raw.githubusercontent.com/Het2208/Het2208/output/github-contribution-grid-snake.svg" />
+  <img src="https://raw.githubusercontent.com/HetKanasagara/HetKanasagara/main/assets/github-metrics.svg" />
 </p>
 
 ---
 
-<h2>🚀 Currently Working On</h2>
+<h2 align="center">Contribution 🐍</h2>
 
-- 💻 Frolic Event Project – MERN  
-- 🟦 MOM Project – MVC (.NET)  
-- 🤖 Learning AI-ML  
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Het2208/Het2208/output/github-contribution-grid-snake.svg" />
+</p>
+
+---
+
+<h2 align="center">🚀 Currently Working On</h2>
+
+<p align="center">
+💻 Frolic Event Project – MERN  
+<br>
+🟦 MOM Project – MVC (.NET)  
+<br>
+🤖 Learning AI-ML  
+</p>
 
 ---
 
 <h2>⚡ Fun Facts</h2>
 
 - I enjoy debugging more than writing code 😄  
-- Dark mode everywhere 🌙  
-- I believe **consistency > talent**
+- **Dark** mode everywhere 🌙  
+- **consistency** is key to **success**
 
 ---
 
