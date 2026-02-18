@@ -28,21 +28,21 @@
 
 <h2 align="center">🧠 Languages</h2>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=c,python,java,cs,html,css,js,dotnet" />
+  <img src="https://skillicons.dev/icons?i=c,python,java,cs,html,css,js" />
 </p>
 
 ---
 
-<h2 align="center">⚙ Frameworks & Databases</h2>
+<h2 align="center">⚙ Frameworks & Databases % Library</h2>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=express,react,mongodb,mysql,dotnet,androidstudio" />
+  <img src="https://skillicons.dev/icons?i=node,express,react,mongodb,mysql,dotnet,androidstudio" />
 </p>
 
 ---
 
 <h2 align="center">🧰 Tools & Platforms</h2>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=git,github,vscode,unity" />
+  <img src="https://skillicons.dev/icons?i=github,vs,vscode,unity,git" />
 </p>
 
 ---
