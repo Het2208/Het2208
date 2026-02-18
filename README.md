@@ -35,14 +35,15 @@
 
 <h2 align="center">⚙ Frameworks & Databases % Library</h2>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=node,express,react,mongodb,mysql,dotnet,androidstudio" />
+  <img src="https://skillicons.dev/icons?i=nodejs,node,express,react,mongodb,mysql,dotnet,androidstudio" />
 </p>
 
 ---
 
 <h2 align="center">🧰 Tools & Platforms</h2>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=github,vs,vscode,unity,git" />
+  <img src="https://skillicons.dev/icons?i=github,vs,unity,git" />
+  <img src="./images/vscode-pink.png" height="48"/>
 </p>
 
 ---
@@ -88,7 +89,7 @@
 <h2 align="center">⚡ Fun Facts</h2>
 
 <p align="center">
-**Coders** enjoy debugging more than writing code 😄  
+<strong>Coders<strong> enjoy debugging more than writing code 😄  
 <br>
 <strong>Dark</strong> mode everywhere 🌙  
 <br>
