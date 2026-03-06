@@ -5,7 +5,6 @@
 <p align="center">
 💻 Full Stack Developer | 🤖 AI-ML Learner  
 <br>
-🚀 Turning ideas into scalable and interactive products
 </p>
 
 ---
@@ -35,33 +34,22 @@
 
 <h2 align="center">⚙ Frameworks & Databases % Library</h2>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=nodejs,node,express,react,mongodb,mysql,dotnet,androidstudio" />
+  <img src="https://skillicons.dev/icons?i=nodejs,express,react,mongodb,mysql,dotnet,androidstudio" />
 </p>
 
 ---
 
 <h2 align="center">🧰 Tools & Platforms</h2>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=github,vs,unity,git" />
-  <img src="./images/vscode-pink.png" height="48"/>
+  <img src="https://skillicons.dev/icons?i=github,vscode,unity,git" />
 </p>
 
 ---
 <h2 align="center">📊 GitHub Analytics</h2>
 
-<!-- Overall Coding Impact -->
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Het2208&show_icons=true&theme=tokyonight&hide_border=true" />
-</p>
-
 <!-- Contribution Streaks -->
 <p align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com?user=Het2208&theme=tokyonight&hide_border=true" />
-</p>
-
-<!-- Language Distribution -->
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Het2208&layout=compact&theme=tokyonight&hide_border=true&langs_count=8" />
 </p>
 
 ---
@@ -89,9 +77,7 @@
 <h2 align="center">⚡ Fun Facts</h2>
 
 <p align="center">
-<strong>Coders<strong> enjoy debugging more than writing code 😄  
-<br>
-<strong>Dark</strong> mode everywhere 🌙  
+<strong>Coders<strong> enjoy debugging more than writing code 😄 
 <br>
 Consistency > Motivation
 </p>
