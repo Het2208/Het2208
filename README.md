@@ -32,7 +32,7 @@
 
 ---
 
-<h2 align="center">⚙ Frameworks & Databases % Library</h2>
+<h2 align="center">⚙ Frameworks & Databases & Library</h2>
 <p align="center">
   <img src="https://skillicons.dev/icons?i=nodejs,express,react,mongodb,mysql,dotnet,androidstudio" />
 </p>
