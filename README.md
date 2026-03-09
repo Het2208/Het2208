@@ -62,7 +62,7 @@
 
 ---
 
-<h2 align="center">🚀 Currently Working On</h2>
+<h2 align="center">Currently Working On</h2>
 
 <p align="center">
 💻 Frolic Event Project – MERN  
