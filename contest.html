@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Arena — Contest</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: #1f2530;
+    --accent: #00e5a0;
+    --accent2: #7b61ff;
+    --accent3: #ff6b35;
+    --text: #e8eaf0;
+    --muted: #5a6070;
+    --pass: #00c97a;
+    --fail: #ff4d4d;
+    --warn: #ffb300;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRID BG */
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(0,229,160,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap { position:relative; z-index:1; max-width:1400px; margin:0 auto; padding:0 20px; }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,12,16,.9);
+    backdrop-filter: blur(12px);
+    position: sticky; top:0; z-index:100;
+  }
+  .header-inner {
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 14px 28px;
+    max-width:1400px; margin:0 auto;
+  }
+  .logo {
+    font-size:1.1rem; font-weight:800; letter-spacing:-.5px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo-bracket { color: var(--accent); font-family:'JetBrains Mono',monospace; }
+  .logo-text { color: var(--text); }
+  .contest-badge {
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color:#000; font-size:.68rem; font-weight:700;
+    padding:3px 10px; border-radius:20px; letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .header-meta { display:flex; align-items:center; gap:16px; font-size:.8rem; color:var(--muted); }
+  .timer-box {
+    display:flex; align-items:center; gap:6px;
+    background: var(--surface2); border:1px solid var(--border);
+    border-radius:6px; padding:6px 12px;
+    font-family:'JetBrains Mono',monospace; font-size:.85rem; color:var(--accent);
+  }
+  .dot { width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* PROBLEM NAV */
+  .prob-nav {
+    display:flex; gap:0; overflow-x:auto; scrollbar-width:none;
+    border-bottom:1px solid var(--border);
+    background: var(--surface);
+  }
+  .prob-nav::-webkit-scrollbar { display:none; }
+  .prob-tab {
+    flex-shrink:0; padding:12px 22px;
+    font-size:.78rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    cursor:pointer; border:none; background:none;
+    color:var(--muted); border-bottom:2px solid transparent;
+    transition:all .2s; font-family:'Syne',sans-serif;
+    position:relative;
+  }
+  .prob-tab:hover { color:var(--text); background:rgba(255,255,255,.03); }
+  .prob-tab.active { color:var(--accent); border-bottom-color:var(--accent); background:rgba(0,229,160,.04); }
+  .prob-tab .diff {
+    display:inline-block; font-size:.6rem; padding:1px 5px; border-radius:3px;
+    margin-left:6px; font-weight:700;
+  }
+  .diff-easy { background:rgba(0,201,122,.15); color:var(--pass); }
+  .diff-med { background:rgba(255,179,0,.15); color:var(--warn); }
+
+  /* MAIN LAYOUT */
+  .main { display:grid; grid-template-columns:1fr 1fr; gap:0; height:calc(100vh - 106px); }
+
+  /* PROBLEM PANEL */
+  .prob-panel {
+    border-right:1px solid var(--border);
+    overflow-y:auto; padding:28px 32px;
+    background:var(--surface);
+    scrollbar-width:thin; scrollbar-color: var(--border) transparent;
+  }
+  .prob-panel::-webkit-scrollbar { width:4px; }
+  .prob-panel::-webkit-scrollbar-track { background:transparent; }
+  .prob-panel::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+
+  .prob-header { margin-bottom:24px; }
+  .prob-id {
+    font-family:'JetBrains Mono',monospace; font-size:.7rem;
+    color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px;
+  }
+  .prob-title {
+    font-size:1.5rem; font-weight:800; line-height:1.2; color:var(--text);
+    margin-bottom:10px;
+  }
+  .prob-tags { display:flex; gap:8px; flex-wrap:wrap; }
+  .tag {
+    font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    padding:3px 9px; border-radius:4px; border:1px solid;
+  }
+  .tag-easy { color:var(--pass); border-color:rgba(0,201,122,.3); background:rgba(0,201,122,.06); }
+  .tag-med { color:var(--warn); border-color:rgba(255,179,0,.3); background:rgba(255,179,0,.06); }
+  .tag-loop { color:var(--accent2); border-color:rgba(123,97,255,.3); background:rgba(123,97,255,.06); }
+  .tag-math { color:var(--accent3); border-color:rgba(255,107,53,.3); background:rgba(255,107,53,.06); }
+
+  .section-label {
+    font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em;
+    color:var(--muted); margin-bottom:8px; margin-top:22px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .section-label::after {
+    content:''; flex:1; height:1px; background:var(--border);
+  }
+  .prob-desc {
+    font-size:.9rem; line-height:1.7; color:rgba(232,234,240,.75);
+    font-family:'JetBrains Mono',monospace;
+  }
+  .io-box {
+    background: var(--bg); border:1px solid var(--border); border-radius:8px;
+    padding:14px 16px; margin-top:8px;
+  }
+  .io-box code {
+    font-family:'JetBrains Mono',monospace; font-size:.82rem;
+    color:var(--accent); display:block; line-height:1.6;
+    white-space:pre;
+  }
+
+  .test-cases-grid { display:flex; flex-direction:column; gap:8px; margin-top:8px; }
+  .tc {
+    background:var(--bg); border:1px solid var(--border); border-radius:8px;
+    overflow:hidden;
+  }
+  .tc-header {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:8px 14px; background:rgba(255,255,255,.02);
+    font-size:.7rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em;
+  }
+  .tc-status { width:8px;height:8px;border-radius:50%;background:var(--muted); }
+  .tc-status.pass { background:var(--pass); box-shadow:0 0 6px var(--pass); }
+  .tc-status.fail { background:var(--fail); box-shadow:0 0 6px var(--fail); }
+  .tc-body { display:grid; grid-template-columns:1fr 1fr; gap:0; }
+  .tc-col { padding:10px 14px; border-right:1px solid var(--border); }
+  .tc-col:last-child { border-right:none; }
+  .tc-col-label { font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:4px; }
+  .tc-col code { font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--text); white-space:pre; }
+
+  /* CODE PANEL */
+  .code-panel {
+    display:flex; flex-direction:column;
+    background:var(--bg);
+  }
+  .code-toolbar {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 16px; border-bottom:1px solid var(--border);
+    background:var(--surface);
+  }
+  .lang-select {
+    background:var(--surface2); border:1px solid var(--border); color:var(--text);
+    font-family:'JetBrains Mono',monospace; font-size:.78rem;
+    padding:5px 10px; border-radius:5px; cursor:pointer; outline:none;
+  }
+  .lang-select:focus { border-color:var(--accent); }
+  .toolbar-right { display:flex; gap:8px; }
+  .btn {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:7px 16px; border-radius:6px; font-size:.78rem; font-weight:700;
+    cursor:pointer; border:none; font-family:'Syne',sans-serif;
+    text-transform:uppercase; letter-spacing:.04em; transition:all .15s;
+  }
+  .btn-run {
+    background:var(--surface2); color:var(--text); border:1px solid var(--border);
+  }
+  .btn-run:hover { border-color:var(--accent2); color:var(--accent2); }
+  .btn-submit {
+    background: linear-gradient(135deg, var(--accent), #00b87a);
+    color:#000;
+  }
+  .btn-submit:hover { transform:translateY(-1px); box-shadow:0 4px 16px rgba(0,229,160,.3); }
+  .btn-submit:active { transform:translateY(0); }
+  .btn:disabled { opacity:.4; cursor:not-allowed; transform:none !important; }
+
+  .editor-wrap { flex:1; position:relative; overflow:hidden; }
+  #code-editor {
+    width:100%; height:100%;
+    background: transparent;
+    border:none; outline:none; resize:none;
+    font-family:'JetBrains Mono',monospace; font-size:.85rem;
+    color:#abb2bf; line-height:1.6;
+    padding:20px; tab-size:4;
+    caret-color: var(--accent);
+  }
+  #code-editor::selection { background:rgba(0,229,160,.15); }
+
+  /* OUTPUT PANEL */
+  .output-panel {
+    border-top:1px solid var(--border);
+    background:var(--surface);
+    max-height: 220px;
+    overflow-y:auto;
+    scrollbar-width:thin; scrollbar-color:var(--border) transparent;
+  }
+  .output-panel::-webkit-scrollbar { width:4px; }
+  .output-panel::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+  .output-tabs { display:flex; border-bottom:1px solid var(--border); }
+  .output-tab {
+    padding:8px 16px; font-size:.72rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:.06em; color:var(--muted); cursor:pointer; border:none;
+    background:none; border-bottom:2px solid transparent; font-family:'Syne',sans-serif;
+  }
+  .output-tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .output-content { padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:.8rem; line-height:1.6; }
+  .out-line { display:flex; gap:10px; align-items:flex-start; margin-bottom:4px; }
+  .out-tc { color:var(--muted); min-width:60px; font-size:.7rem; }
+  .out-pass { color:var(--pass); }
+  .out-fail { color:var(--fail); }
+  .out-val { color:var(--text); }
+  .result-summary {
+    display:flex; align-items:center; gap:12px;
+    padding:8px 16px; border-top:1px solid var(--border);
+    font-size:.78rem;
+  }
+  .score-chip {
+    font-family:'JetBrains Mono',monospace; font-weight:700;
+    padding:4px 12px; border-radius:4px; font-size:.9rem;
+  }
+  .chip-pass { background:rgba(0,201,122,.1); color:var(--pass); border:1px solid rgba(0,201,122,.25); }
+  .chip-fail { background:rgba(255,77,77,.1); color:var(--fail); border:1px solid rgba(255,77,77,.25); }
+  .chip-partial { background:rgba(255,179,0,.1); color:var(--warn); border:1px solid rgba(255,179,0,.25); }
+
+  /* SCOREBOARD */
+  .scoreboard {
+    display:none; position:fixed; inset:0; z-index:200;
+    background:rgba(10,12,16,.95); backdrop-filter:blur(16px);
+    align-items:center; justify-content:center;
+  }
+  .scoreboard.open { display:flex; }
+  .score-modal {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:16px; padding:40px; width:560px; max-width:95vw;
+    text-align:center;
+  }
+  .score-modal h2 { font-size:1.6rem; font-weight:800; margin-bottom:6px; }
+  .score-modal p { color:var(--muted); font-size:.85rem; margin-bottom:28px; }
+  .score-big {
+    font-family:'JetBrains Mono',monospace; font-size:3.5rem; font-weight:700;
+    color:var(--accent); line-height:1; margin-bottom:8px;
+  }
+  .score-sub { color:var(--muted); font-size:.82rem; margin-bottom:32px; }
+  .score-rows { display:flex; flex-direction:column; gap:8px; text-align:left; margin-bottom:28px; }
+  .score-row {
+    display:flex; justify-content:space-between; align-items:center;
+    background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px 16px;
+    font-size:.82rem;
+  }
+  .score-row-title { font-weight:700; }
+  .score-row-val { font-family:'JetBrains Mono',monospace; font-weight:700; }
+  .btn-close {
+    background:var(--surface2); color:var(--text); border:1px solid var(--border);
+    width:100%; justify-content:center;
+  }
+  .btn-close:hover { border-color:var(--accent); color:var(--accent); }
+
+  .running-indicator {
+    display:inline-flex; align-items:center; gap:6px;
+    color:var(--accent2); font-size:.75rem; font-family:'JetBrains Mono',monospace;
+  }
+  .spin { animation:spin .6s linear infinite; display:inline-block; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+
+  .empty-output { color:var(--muted); font-size:.8rem; font-style:italic; padding:8px; }
+
+  @media(max-width:768px) {
+    .main { grid-template-columns:1fr; height:auto; }
+    .prob-panel { height:50vh; }
+    .code-panel { height:60vh; }
+    .header-meta { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-bracket">{</span>
+      <span class="logo-text">CODE ARENA</span>
+      <span class="logo-bracket">}</span>
+      <span class="contest-badge">Contest</span>
+    </div>
+    <div class="header-meta">
+      <span>6 Problems</span>
+      <span style="color:var(--border)">|</span>
+      <div class="timer-box"><span class="dot"></span><span id="timer">00:00:00</span></div>
+      <button class="btn" onclick="document.querySelector('.scoreboard').classList.toggle('open')" style="background:var(--surface2);border:1px solid var(--border);color:var(--text)">
+        📊 Scoreboard
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="prob-nav">
+  <button class="prob-tab active" onclick="switchProblem(0)">A — Factorial <span class="diff diff-easy">Easy</span></button>
+  <button class="prob-tab" onclick="switchProblem(1)">B — Sum of Digits <span class="diff diff-easy">Easy</span></button>
+  <button class="prob-tab" onclick="switchProblem(2)">C — Even & Odd Digits <span class="diff diff-easy">Easy</span></button>
+  <button class="prob-tab" onclick="switchProblem(3)">D — Odd or Even <span class="diff diff-easy">Easy</span></button>
+  <button class="prob-tab" onclick="switchProblem(4)">E — Prime in Range <span class="diff diff-med">Med</span></button>
+  <button class="prob-tab" onclick="switchProblem(5)">F — Armstrong <span class="diff diff-easy">Easy</span></button>
+</div>
+
+<div class="main">
+  <div class="prob-panel" id="prob-panel"></div>
+  <div class="code-panel">
+    <div class="code-toolbar">
+      <select class="lang-select" id="lang-select" onchange="changeLang()">
+        <option value="python">Python 3</option>
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
+        <option value="java">Java</option>
+        <option value="javascript">JavaScript</option>
+      </select>
+      <div class="toolbar-right">
+        <button class="btn btn-run" onclick="runCode(false)">▶ Run Tests</button>
+        <button class="btn btn-submit" onclick="runCode(true)">✓ Submit</button>
+      </div>
+    </div>
+    <div class="editor-wrap">
+      <textarea id="code-editor" spellcheck="false" placeholder="// Write your solution here..."></textarea>
+    </div>
+    <div class="output-panel" id="output-panel">
+      <div class="output-tabs">
+        <button class="output-tab active" id="out-tab">Output</button>
+        <div id="result-summary" class="result-summary" style="display:none"></div>
+      </div>
+      <div class="output-content" id="output-content">
+        <span class="empty-output">Run your code to see results here.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCOREBOARD -->
+<div class="scoreboard">
+  <div class="score-modal">
+    <h2>🏆 Scoreboard</h2>
+    <p>Your contest progress</p>
+    <div class="score-big" id="total-score">0</div>
+    <div class="score-sub" id="total-sub">0 / 6 problems solved</div>
+    <div class="score-rows" id="score-rows"></div>
+    <button class="btn btn-close" onclick="document.querySelector('.scoreboard').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<script>
+const PROBLEMS = [
+  {
+    id: 'A', title: 'Factorial',
+    tags: ['easy', 'math'],
+    desc: `Given a non-negative integer N, compute N! (N factorial).
+
+Recall: N! = N × (N-1) × ... × 2 × 1
+      0! = 1 (by definition)`,
+    inputDesc: 'A single integer N (0 ≤ N ≤ 15)',
+    outputDesc: 'Print the factorial of N.',
+    examples: [{ input:'5', output:'120' }],
+    testCases: [
+      {input:'0',output:'1'},{input:'1',output:'1'},{input:'3',output:'6'},
+      {input:'5',output:'120'},{input:'7',output:'5040'},{input:'10',output:'3628800'},
+      {input:'12',output:'479001600'},{input:'15',output:'1307674368000'},
+      {input:'2',output:'2'},{input:'6',output:'720'}
+    ],
+    starters: {
+      python: `n = int(input())
+result = 1
+for i in range(1, n+1):
+    result *= i
+print(result)`,
+      c: `#include <stdio.h>
+int main() {
+    long long n, result = 1;
+    scanf("%lld", &n);
+    for (long long i = 1; i <= n; i++) result *= i;
+    printf("%lld\\n", result);
+    return 0;
+}`,
+      cpp: `#include <iostream>
+using namespace std;
+int main() {
+    long long n, result = 1;
+    cin >> n;
+    for (long long i = 1; i <= n; i++) result *= i;
+    cout << result << endl;
+    return 0;
+}`,
+      java: `import java.util.Scanner;
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        long n = sc.nextLong(), result = 1;
+        for (long i = 1; i <= n; i++) result *= i;
+        System.out.println(result);
+    }
+}`,
+      javascript: `const n = parseInt(require('fs').readFileSync('/dev/stdin','utf8').trim());
+let result = 1n;
+for (let i = 1n; i <= BigInt(n); i++) result *= i;
+console.log(result.toString());`
+    },
+    solve: (input) => {
+      const n = parseInt(input.trim());
+      let r = BigInt(1);
+      for (let i = 2n; i <= BigInt(n); i++) r *= i;
+      return r.toString();
+    }
+  },
+  {
+    id: 'B', title: 'Sum of Digits',
+    tags: ['easy', 'math'],
+    desc: `Given a non-negative integer N, compute the sum of all its digits.`,
+    inputDesc: 'A single non-negative integer N.',
+    outputDesc: 'Print the sum of digits of N.',
+    examples: [{ input:'123', output:'6' }],
+    testCases: [
+      {input:'0',output:'0'},{input:'5',output:'5'},{input:'12',output:'3'},
+      {input:'123',output:'6'},{input:'999',output:'27'},{input:'1001',output:'2'},
+      {input:'98765',output:'35'},{input:'11111',output:'5'},
+      {input:'20002',output:'4'},{input:'456789',output:'39'}
+    ],
+    starters: {
+      python: `n = input().strip()
+print(sum(int(d) for d in n))`,
+      c: `#include <stdio.h>
+int main() {
+    char s[50]; int sum=0;
+    scanf("%s", s);
+    for(int i=0; s[i]; i++) sum += s[i]-'0';
+    printf("%d\\n", sum);
+    return 0;
+}`,
+      cpp: `#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+    string s; cin >> s;
+    int sum = 0;
+    for (char c : s) sum += c - '0';
+    cout << sum << endl;
+    return 0;
+}`,
+      java: `import java.util.Scanner;
+public class Solution {
+    public static void main(String[] args) {
+        String s = new Scanner(System.in).next();
+        int sum = 0;
+        for (char c : s.toCharArray()) sum += c - '0';
+        System.out.println(sum);
+    }
+}`,
+      javascript: `const s = require('fs').readFileSync('/dev/stdin','utf8').trim();
+console.log([...s].reduce((a,c)=>a+parseInt(c),0));`
+    },
+    solve: (input) => {
+      return input.trim().split('').reduce((a,c)=>a+parseInt(c),0).toString();
+    }
+  },
+  {
+    id: 'C', title: 'Count Even & Odd Digits',
+    tags: ['easy', 'loop'],
+    desc: `Given a positive integer N, count how many of its digits are even and how many are odd.
+
+Digits 0,2,4,6,8 are even. Digits 1,3,5,7,9 are odd.`,
+    inputDesc: 'A single positive integer N.',
+    outputDesc: 'Print two lines:\nEven: X\nOdd: Y',
+    examples: [{ input:'123456', output:'Even: 3\nOdd: 3' }],
+    testCases: [
+      {input:'123456',output:'Even: 3\nOdd: 3'},{input:'111',output:'Even: 0\nOdd: 3'},
+      {input:'2468',output:'Even: 4\nOdd: 0'},{input:'1000',output:'Even: 3\nOdd: 1'},
+      {input:'987654',output:'Even: 3\nOdd: 3'},{input:'13579',output:'Even: 0\nOdd: 5'},
+      {input:'222222',output:'Even: 6\nOdd: 0'},{input:'12345',output:'Even: 2\nOdd: 3'},
+      {input:'908172',output:'Even: 4\nOdd: 2'},{input:'7',output:'Even: 0\nOdd: 1'}
+    ],
+    starters: {
+      python: `n = input().strip()
+even = sum(1 for d in n if int(d)%2==0)
+odd = len(n) - even
+print(f"Even: {even}")
+print(f"Odd: {odd}")`,
+      c: `#include <stdio.h>
+int main() {
+    char s[50]; int e=0,o=0;
+    scanf("%s", s);
+    for(int i=0; s[i]; i++) {
+        if((s[i]-'0')%2==0) e++; else o++;
+    }
+    printf("Even: %d\\nOdd: %d\\n", e, o);
+    return 0;
+}`,
+      cpp: `#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+    string s; cin >> s;
+    int e=0,o=0;
+    for(char c:s){ if((c-'0')%2==0) e++; else o++; }
+    cout<<"Even: "<<e<<"\\nOdd: "<<o<<endl;
+    return 0;
+}`,
+      java: `import java.util.Scanner;
+public class Solution {
+    public static void main(String[] args) {
+        String s = new Scanner(System.in).next();
+        int e=0,o=0;
+        for(char c:s.toCharArray()){ if((c-'0')%2==0) e++; else o++; }
+        System.out.println("Even: "+e+"\\nOdd: "+o);
+    }
+}`,
+      javascript: `const s = require('fs').readFileSync('/dev/stdin','utf8').trim();
+let e=0,o=0;
+for(const c of s){ if(parseInt(c)%2===0) e++; else o++; }
+console.log("Even: "+e+"\\nOdd: "+o);`
+    },
+    solve: (input) => {
+      const s = input.trim();
+      let e=0,o=0;
+      for(const c of s){ if(parseInt(c)%2===0) e++; else o++; }
+      return `Even: ${e}\nOdd: ${o}`;
+    }
+  },
+  {
+    id: 'D', title: 'Odd or Even (Without %)',
+    tags: ['easy', 'math'],
+    desc: `Given an integer N, determine if it is Odd or Even.
+
+Constraint: You must NOT use the modulo operator (%) in your solution.
+Hint: Use bitwise AND (&). A number is even if its last bit is 0.`,
+    inputDesc: 'A single non-negative integer N.',
+    outputDesc: 'Print "Even" or "Odd".',
+    examples: [{ input:'7', output:'Odd' }],
+    testCases: [
+      {input:'1',output:'Odd'},{input:'2',output:'Even'},{input:'15',output:'Odd'},
+      {input:'20',output:'Even'},{input:'999',output:'Odd'},{input:'1000',output:'Even'},
+      {input:'0',output:'Even'},{input:'101',output:'Odd'},
+      {input:'200',output:'Even'},{input:'77',output:'Odd'}
+    ],
+    starters: {
+      python: `n = int(input())
+print("Even" if (n & 1) == 0 else "Odd")`,
+      c: `#include <stdio.h>
+int main() {
+    int n; scanf("%d", &n);
+    printf("%s\\n", (n&1)==0 ? "Even" : "Odd");
+    return 0;
+}`,
+      cpp: `#include <iostream>
+using namespace std;
+int main() {
+    int n; cin >> n;
+    cout << ((n&1)==0 ? "Even" : "Odd") << endl;
+    return 0;
+}`,
+      java: `import java.util.Scanner;
+public class Solution {
+    public static void main(String[] args) {
+        int n = new Scanner(System.in).nextInt();
+        System.out.println((n&1)==0 ? "Even" : "Odd");
+    }
+}`,
+      javascript: `const n = parseInt(require('fs').readFileSync('/dev/stdin','utf8').trim());
+console.log((n&1)===0?"Even":"Odd");`
+    },
+    solve: (input) => {
+      const n = parseInt(input.trim());
+      return (n&1)===0 ? 'Even' : 'Odd';
+    }
+  },
+  {
+    id: 'E', title: 'Prime Numbers in Range',
+    tags: ['medium', 'math', 'loop'],
+    desc: `Given two integers L and R, print all prime numbers in the range [L, R] inclusive, separated by spaces.
+
+A prime number is a number greater than 1 that has no divisors other than 1 and itself.`,
+    inputDesc: 'Two integers L and R on the same line (1 ≤ L ≤ R ≤ 200).',
+    outputDesc: 'Print all primes in [L,R] separated by spaces.',
+    examples: [{ input:'1 10', output:'2 3 5 7' }],
+    testCases: [
+      {input:'1 10',output:'2 3 5 7'},{input:'10 20',output:'11 13 17 19'},
+      {input:'20 30',output:'23 29'},{input:'2 5',output:'2 3 5'},
+      {input:'50 60',output:'53 59'},{input:'30 40',output:'31 37'},
+      {input:'1 2',output:'2'},{input:'100 110',output:'101 103 107 109'},
+      {input:'3 3',output:'3'},{input:'4 6',output:'5'}
+    ],
+    starters: {
+      python: `def is_prime(n):
+    if n < 2: return False
+    for i in range(2, int(n**0.5)+1):
+        if n % i == 0: return False
+    return True
+
+L, R = map(int, input().split())
+primes = [str(n) for n in range(L, R+1) if is_prime(n)]
+print(' '.join(primes))`,
+      c: `#include <stdio.h>
+#include <math.h>
+int isPrime(int n) {
+    if(n<2) return 0;
+    for(int i=2;i<=(int)sqrt(n);i++) if(n%i==0) return 0;
+    return 1;
+}
+int main() {
+    int L,R; scanf("%d %d",&L,&R);
+    int first=1;
+    for(int i=L;i<=R;i++){
+        if(isPrime(i)){
+            if(!first) printf(" ");
+            printf("%d",i); first=0;
+        }
+    }
+    printf("\\n"); return 0;
+}`,
+      cpp: `#include <iostream>
+#include <cmath>
+using namespace std;
+bool isPrime(int n){
+    if(n<2) return false;
+    for(int i=2;i<=(int)sqrt(n);i++) if(n%i==0) return false;
+    return true;
+}
+int main(){
+    int L,R; cin>>L>>R;
+    bool first=true;
+    for(int i=L;i<=R;i++) if(isPrime(i)){
+        if(!first) cout<<" ";
+        cout<<i; first=false;
+    }
+    cout<<endl; return 0;
+}`,
+      java: `import java.util.Scanner;
+public class Solution {
+    static boolean isPrime(int n){
+        if(n<2) return false;
+        for(int i=2;i*i<=n;i++) if(n%i==0) return false;
+        return true;
+    }
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int L=sc.nextInt(), R=sc.nextInt();
+        StringBuilder sb=new StringBuilder();
+        for(int i=L;i<=R;i++) if(isPrime(i)){
+            if(sb.length()>0) sb.append(" ");
+            sb.append(i);
+        }
+        System.out.println(sb);
+    }
+}`,
+      javascript: `const [L,R]=require('fs').readFileSync('/dev/stdin','utf8').trim().split(' ').map(Number);
+function isPrime(n){if(n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true;}
+console.log(Array.from({length:R-L+1},(_,i)=>i+L).filter(isPrime).join(' '));`
+    },
+    solve: (input) => {
+      const [L,R] = input.trim().split(' ').map(Number);
+      const isPrime = n => {if(n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true;}
+      return Array.from({length:R-L+1},(_,i)=>i+L).filter(isPrime).join(' ');
+    }
+  },
+  {
+    id: 'F', title: 'Armstrong Number',
+    tags: ['easy', 'math'],
+    desc: `A number is an Armstrong number (also called narcissistic number) if the sum of its digits each raised to the power of the number of digits equals the number itself.
+
+Example: 153 → 1³ + 5³ + 3³ = 1 + 125 + 27 = 153 ✓
+Example: 9474 → 9⁴ + 4⁴ + 7⁴ + 4⁴ = 6561+256+2401+256 = 9474 ✓`,
+    inputDesc: 'A single positive integer N.',
+    outputDesc: 'Print "Armstrong" if N is an Armstrong number, otherwise "Not Armstrong".',
+    examples: [{ input:'153', output:'Armstrong' }, { input:'100', output:'Not Armstrong' }],
+    testCases: [
+      {input:'153',output:'Armstrong'},{input:'370',output:'Armstrong'},
+      {input:'371',output:'Armstrong'},{input:'407',output:'Armstrong'},
+      {input:'100',output:'Not Armstrong'},{input:'200',output:'Not Armstrong'},
+      {input:'9474',output:'Armstrong'},{input:'9475',output:'Not Armstrong'},
+      {input:'1',output:'Armstrong'},{input:'10',output:'Not Armstrong'}
+    ],
+    starters: {
+      python: `n = input().strip()
+power = len(n)
+total = sum(int(d)**power for d in n)
+print("Armstrong" if total == int(n) else "Not Armstrong")`,
+      c: `#include <stdio.h>
+#include <string.h>
+#include <math.h>
+int main(){
+    char s[20]; scanf("%s",s);
+    int len=strlen(s), sum=0;
+    for(int i=0;i<len;i++) sum+=(int)pow(s[i]-'0',len);
+    printf("%s\\n", sum==atoi(s)?"Armstrong":"Not Armstrong");
+    return 0;
+}`,
+      cpp: `#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+int main(){
+    string s; cin>>s;
+    int len=s.size(), sum=0;
+    for(char c:s) sum+=pow(c-'0',len);
+    cout<<(sum==stoi(s)?"Armstrong":"Not Armstrong")<<endl;
+    return 0;
+}`,
+      java: `import java.util.Scanner;
+public class Solution {
+    public static void main(String[] args){
+        String s=new Scanner(System.in).next();
+        int len=s.length(), sum=0;
+        for(char c:s.toCharArray()) sum+=(int)Math.pow(c-'0',len);
+        System.out.println(sum==Integer.parseInt(s)?"Armstrong":"Not Armstrong");
+    }
+}`,
+      javascript: `const s=require('fs').readFileSync('/dev/stdin','utf8').trim();
+const p=s.length, sum=[...s].reduce((a,c)=>a+Math.pow(parseInt(c),p),0);
+console.log(sum===parseInt(s)?"Armstrong":"Not Armstrong");`
+    },
+    solve: (input) => {
+      const s = input.trim();
+      const p = s.length;
+      const sum = [...s].reduce((a,c)=>a+Math.pow(parseInt(c),p),0);
+      return sum===parseInt(s) ? 'Armstrong' : 'Not Armstrong';
+    }
+  }
+];
+
+let currentProblem = 0;
+let lang = 'python';
+let scores = new Array(6).fill(null); // null=unsolved, {passed,total}
+let startTime = Date.now();
+
+// Timer
+setInterval(()=>{
+  const s = Math.floor((Date.now()-startTime)/1000);
+  const h = String(Math.floor(s/3600)).padStart(2,'0');
+  const m = String(Math.floor((s%3600)/60)).padStart(2,'0');
+  const sec = String(s%60).padStart(2,'0');
+  document.getElementById('timer').textContent = `${h}:${m}:${sec}`;
+}, 1000);
+
+function switchProblem(idx) {
+  currentProblem = idx;
+  document.querySelectorAll('.prob-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  renderProblem();
+  loadCode();
+  clearOutput();
+}
+
+function renderProblem() {
+  const p = PROBLEMS[currentProblem];
+  const tagMap = {easy:'tag-easy',medium:'tag-med',loop:'tag-loop',math:'tag-math'};
+  document.getElementById('prob-panel').innerHTML = `
+    <div class="prob-header">
+      <div class="prob-id">Problem ${p.id}</div>
+      <div class="prob-title">${p.title}</div>
+      <div class="prob-tags">
+        ${p.tags.map(t=>`<span class="tag ${tagMap[t]||'tag-easy'}">${t}</span>`).join('')}
+      </div>
+    </div>
+    <div class="section-label">Description</div>
+    <div class="prob-desc">${p.desc}</div>
+    <div class="section-label">Input</div>
+    <div class="prob-desc">${p.inputDesc}</div>
+    <div class="section-label">Output</div>
+    <div class="prob-desc">${p.outputDesc}</div>
+    <div class="section-label">Example${p.examples.length>1?'s':''}</div>
+    ${p.examples.map(ex=>`
+      <div style="margin-bottom:10px">
+        <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Input</div>
+        <div class="io-box"><code>${ex.input}</code></div>
+        <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:8px 0 4px">Output</div>
+        <div class="io-box"><code>${ex.output}</code></div>
+      </div>
+    `).join('')}
+    <div class="section-label">Test Cases (${p.testCases.length})</div>
+    <div class="test-cases-grid">
+      ${p.testCases.map((tc,i)=>`
+        <div class="tc" id="tc-${i}">
+          <div class="tc-header">
+            <span>Case ${i+1}</span>
+            <div class="tc-status" id="tc-dot-${i}"></div>
+          </div>
+          <div class="tc-body">
+            <div class="tc-col">
+              <div class="tc-col-label">Input</div>
+              <code>${escHtml(tc.input)}</code>
+            </div>
+            <div class="tc-col">
+              <div class="tc-col-label">Expected</div>
+              <code>${escHtml(tc.output)}</code>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+const codeStore = {};
+function loadCode() {
+  const key = `${currentProblem}-${lang}`;
+  if (codeStore[key]) {
+    document.getElementById('code-editor').value = codeStore[key];
+  } else {
+    document.getElementById('code-editor').value = PROBLEMS[currentProblem].starters[lang] || '';
+  }
+}
+function saveCode() {
+  codeStore[`${currentProblem}-${lang}`] = document.getElementById('code-editor').value;
+}
+function changeLang() {
+  saveCode();
+  lang = document.getElementById('lang-select').value;
+  loadCode();
+}
+document.getElementById('code-editor').addEventListener('input', saveCode);
+document.getElementById('code-editor').addEventListener('keydown', e => {
+  if (e.key === 'Tab') { e.preventDefault(); const t=e.target,s=t.selectionStart,en=t.selectionEnd; t.value=t.value.substring(0,s)+'    '+t.value.substring(en); t.selectionStart=t.selectionEnd=s+4; }
+});
+
+function clearOutput() {
+  document.getElementById('output-content').innerHTML = '<span class="empty-output">Run your code to see results here.</span>';
+  document.getElementById('result-summary').style.display='none';
+  const p = PROBLEMS[currentProblem];
+  p.testCases.forEach((_,i)=>{ const d=document.getElementById(`tc-dot-${i}`); if(d){d.className='tc-status';} });
+}
+
+async function runCode(submit) {
+  saveCode();
+  const p = PROBLEMS[currentProblem];
+  const outEl = document.getElementById('output-content');
+  const sumEl = document.getElementById('result-summary');
+  outEl.innerHTML = `<span class="running-indicator"><span class="spin">⟳</span> Evaluating ${p.testCases.length} test cases...</span>`;
+  sumEl.style.display='none';
+
+  // Simulate async
+  await new Promise(r=>setTimeout(r,400+Math.random()*400));
+
+  // Run each test case using the solve function (simulate judge)
+  const results = p.testCases.map(tc => {
+    try {
+      const got = p.solve(tc.input).trim().replace(/\r\n/g,'\n');
+      const exp = tc.output.trim().replace(/\r\n/g,'\n');
+      return { input:tc.input, expected:exp, got, pass: got===exp };
+    } catch(e) {
+      return { input:tc.input, expected:tc.output, got:'ERROR', pass:false };
+    }
+  });
+
+  const passed = results.filter(r=>r.pass).length;
+  const total = results.length;
+
+  // Update test case dots in problem panel
+  results.forEach((r,i)=>{
+    const dot = document.getElementById(`tc-dot-${i}`);
+    if(dot) dot.className = 'tc-status ' + (r.pass?'pass':'fail');
+  });
+
+  // Output
+  let html = results.map((r,i)=>`
+    <div class="out-line">
+      <span class="out-tc">TC ${i+1}</span>
+      <span class="${r.pass?'out-pass':'out-fail'}">${r.pass?'✓':'✗'}</span>
+      <span class="out-val" style="color:var(--muted)">in: <span style="color:var(--text)">${escHtml(r.input.replace(/\n/g,' '))}</span></span>
+      ${!r.pass?`<span class="out-val" style="color:var(--muted)">got: <span style="color:var(--fail)">${escHtml(r.got)}</span> expected: <span style="color:var(--pass)">${escHtml(r.expected)}</span></span>`:''}
+    </div>
+  `).join('');
+  outEl.innerHTML = html;
+
+  // Summary
+  const chipClass = passed===total?'chip-pass':passed===0?'chip-fail':'chip-partial';
+  sumEl.style.display='flex';
+  sumEl.innerHTML = `<span class="score-chip ${chipClass}">${passed}/${total}</span><span style="font-size:.78rem;color:var(--muted)">${passed===total?'All test cases passed! 🎉':passed===0?'No test cases passed':'Partial score'}</span>`;
+
+  // Save score
+  if (submit) {
+    scores[currentProblem] = { passed, total };
+    updateScoreboard();
+  }
+}
+
+function updateScoreboard() {
+  const solved = scores.filter(s=>s&&s.passed===s.total).length;
+  const totalPassed = scores.reduce((a,s)=>a+(s?s.passed:0),0);
+  const totalTests = PROBLEMS.reduce((a,p)=>a+p.testCases.length,0);
+  document.getElementById('total-score').textContent = `${Math.round(totalPassed/totalTests*100)}%`;
+  document.getElementById('total-sub').textContent = `${solved} / 6 problems solved · ${totalPassed}/${totalTests} test cases`;
+  const rows = document.getElementById('score-rows');
+  rows.innerHTML = PROBLEMS.map((p,i)=>{
+    const s = scores[i];
+    const chip = !s?'<span style="color:var(--muted);font-size:.78rem">Not submitted</span>':
+      s.passed===s.total?`<span class="score-chip chip-pass">${s.passed}/${s.total}</span>`:
+      s.passed>0?`<span class="score-chip chip-partial">${s.passed}/${s.total}</span>`:
+      `<span class="score-chip chip-fail">${s.passed}/${s.total}</span>`;
+    return `<div class="score-row"><span class="score-row-title">Problem ${p.id} — ${p.title}</span>${chip}</div>`;
+  }).join('');
+}
+
+// Init
+updateScoreboard();
+renderProblem();
+loadCode();
+</script>
+</body>
+</html>
