@@ -25,7 +25,7 @@
 
 ---
 
-<h2 align="center">🧠 Languages</h2>
+<h2 align="center">Languages</h2>
 <p align="center">
   <img src="https://skillicons.dev/icons?i=c,python,java,cs,html,css,js" />
 </p>
