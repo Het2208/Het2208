@@ -87,5 +87,5 @@ Consistency > Motivation
 <h2 align="center">📌 Quote</h2>
 
 <p align="center">
-<em>"Consistency beats talent when talent doesn’t work consistently."</em>
+<em>"Consistency is key to success."</em>
 </p>
