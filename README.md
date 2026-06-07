@@ -53,8 +53,7 @@
 <img src="https://github-readme-streak-stats.herokuapp.com?user=Het2208&theme=tokyonight&hide_border=true" />
 </td>
 <td>
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Het2208&layout=compact&theme=tokyonight&hide_border=true" />
-</td>
+<img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=Het2208&layout=compact&theme=tokyonight&hide_border=true" /></td>
 </tr>
 </table>
 
