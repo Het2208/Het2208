@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-💻 Full Stack Developer | 🤖 ML-DL Learner  
+💻 Full Stack Developer | 🤖 AI-ML-DL Learner  
 <br>
 </p>
 
