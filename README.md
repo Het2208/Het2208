@@ -41,7 +41,7 @@
 
 <h2 align="center">🧰 Tools & Platforms</h2>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=github,vscode,unity,git" />
+  <img src="https://skillicons.dev/icons?i=github,vscode,visualstudio,unity,git" />
 </p>
 
 ---
