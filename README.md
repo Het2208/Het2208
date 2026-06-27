@@ -70,11 +70,13 @@
 <h2 align="center">Currently Working On</h2>
 
 <p align="center">
-💻 Frolic Event Project – MERN  
+Vehicle Insuarance Fraud Detection 
 <br>
-🟦 MOM Project – MVC (.NET)  
+Loan Default Prediction  
 <br>
-🤖 Learning AI-ML  
+Student Project Management Portal 
+<br>
+🤖 Learning AI-ML-DL  
 </p>
 
 ---
@@ -92,5 +94,5 @@ Consistency > Motivation
 <h2 align="center">📌 Quote</h2>
 
 <p align="center">
-<em>"Consistency is key to success."</em>
+<em>"   Consistency is key to success."</em>
 </p>
